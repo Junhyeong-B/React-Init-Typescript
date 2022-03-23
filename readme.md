@@ -405,3 +405,38 @@ module.exports = {
   <img height="200" src="https://user-images.githubusercontent.com/85148549/158333451-b1eb3b74-f7e6-4803-a9c9-80003e42f363.png">
   <img height="200" src="https://user-images.githubusercontent.com/85148549/158334537-5482ffdf-fecc-4a4e-912b-fdc032e0d98b.png">
 </div>
+
+<br />
+
+### 4) 파일 경로 Alias 설정(22.03.17 추가 사항)
+- 이 부분은 선택사항이다.
+- 모듈을 import할 때 파일 경로를 절대 경로(alias)로 사용하여 import 구문을 깔끔하게 작성할 수 있게 된다.
+- `tsconfig.json`
+
+```json
+  "compilerOptions": {
+    /* ... */
+    "baseUrl": ".",
+    "paths": {
+      "@src/*": [
+        "src/*"
+      ]
+    /* ... */
+  }
+```
+
+- `webpack.config.js`
+
+```jsx
+module.exports = {
+  resolve: {
+    /* ... */
+    alias: {
+      "@src": path.resolve(__dirname, "src"),
+    },
+  },
+    /* ... */
+}
+```
+
+- tsconfig.json에서 baseUrl, paths 항목으로 ./src 폴더를 @src로 작성할 수 있게 설정하고, webpack으로 번들링할 때도 해당 경로를 이해할 수 있어야 하므로 resolve 항목에서 alias 속성에 "@src"를 src폴더로 지정한다.
